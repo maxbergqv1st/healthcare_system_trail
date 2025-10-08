@@ -7,6 +7,10 @@ users.Add(new Account("Hasse", "hasse1337", "pass", AccountStatus.Patient));
 users.Add(new Account("Zselyke", "zse", "pass", AccountStatus.Doctor));
 users.Add(new Account("Hugo", "guggan", "pass", AccountStatus.Patient));
 users.Add(new Account("Mikeal", "micke", "pass", AccountStatus.Patient));
+users.Add(new Account("Hassan", "hassan", "pass", AccountStatus.Patient));
+users.Add(new Account("Zigge", "zigge", "pass", AccountStatus.Doctor));
+users.Add(new Account("Abbe", "abbe", "pass", AccountStatus.Patient));
+users.Add(new Account("Ollan", "ollan", "pass", AccountStatus.Patient));
 
 IUser active_user = null;
 bool running = true;
@@ -57,7 +61,18 @@ while (running)
       else
       {
             Console.WriteLine($"===== {((Account)active_user).Status} =====");
-            Console.WriteLine("[1]Profile\n[2]Browse\n[3]Logout");
+            if (((Account)active_user).Status == AccountStatus.Doctor)
+                  {
+                        Console.WriteLine("[1]Profile\n[2]Browse\n[6]Logout");
+                  }
+                  else if (((Account)active_user).Status == AccountStatus.Patient)
+                  {
+                        Console.WriteLine("[1]Profile\n[2]Browse\n[3]Logout");
+                  }
+                  else if (((Account)active_user).Status == AccountStatus.SuperAdmin)
+                  {
+                        Console.WriteLine("[1]Profile\n[2]Browse\n[3]Logout");
+                        }
             var Read = Console.ReadKey(intercept: true);
             Console.Clear();
             switch (Read.Key)
@@ -122,8 +137,29 @@ while (running)
                               }
                               if (selectedPatient != null)
                               {
+                                    
                                     Console.Clear();
                                     Console.WriteLine($"===== Patient {selectedPatient.Name} =====");
+                                    Console.WriteLine("[1]Journal\n[2]Add prescriptions\n[3]back");
+                                    var ReadPatient = Console.ReadKey(intercept: true);
+                                    string ChoosenPatient = ReadPatient.KeyChar.ToString();
+                                    Console.Clear();
+                                    if (ChoosenPatient == "1")
+                                    {
+                                          Console.WriteLine($"===== {selectedPatient.Name} Journals =====");
+                                          Console.ReadLine();
+                                    }
+                                    if (ChoosenPatient == "2")
+                                    {
+                                          Console.WriteLine($"===== Add {selectedPatient.Name} Medication =====");
+                                          Console.ReadLine();
+                                    }
+                                    if (ChoosenPatient == "3")
+                                    {
+                                          Console.WriteLine($"backing...");
+                                          Console.ReadLine();
+                                          break;
+                                    }
                                     Console.ReadLine();
                               }
                               else
@@ -145,7 +181,7 @@ while (running)
                               Console.ReadLine();
                         }
                               break;
-                  case ConsoleKey.D3:
+                  case ConsoleKey.D6:
                               Console.WriteLine($"Logging out...");
                               active_user = null;
                               Console.ReadLine();
