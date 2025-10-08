@@ -4,6 +4,9 @@ using App;
 List<Account> users = new List<Account>();
 users.Add(new Account("Max", "madmax", "pass", AccountStatus.SuperAdmin));
 users.Add(new Account("Hasse", "hasse1337", "pass", AccountStatus.Patient));
+users.Add(new Account("Zselyke", "zse", "pass", AccountStatus.Doctor));
+users.Add(new Account("Hugo", "guggan", "pass", AccountStatus.Patient));
+users.Add(new Account("Mikeal", "micke", "pass", AccountStatus.Patient));
 
 IUser active_user = null;
 bool running = true;
@@ -82,24 +85,55 @@ while (running)
                   case ConsoleKey.D2:
                         if (((Account)active_user).Status == AccountStatus.Doctor)
                         {
-                              Console.WriteLine($"===== {((Account)active_user).Name} =====");
-                              Console.WriteLine($"Browse");
-                              Console.ReadLine();
+                              Console.WriteLine($"===== Browse Patient =====");
+                              int index = 1;
+                              foreach (var acc in users)
+                              {
+                                    if (acc.Status == AccountStatus.Patient)
+                                    {
+                                          Console.WriteLine($"[{index}] - {acc.Name} is Patient");
+                                          index++;
+                                    }
+                              }
+                              var keyInfo = Console.ReadKey(intercept: true);
+                              string input = keyInfo.KeyChar.ToString();
+                              if (int.TryParse(input, out int choice))
+                              {
+                                    int currentIndex = 1;
+                                    Account selectedPatient = null;
+                                    foreach (var acc in users)
+                                    {
+                                          if (acc.Status == AccountStatus.Patient)
+                                          {
+                                                if (currentIndex == choice)
+                                                {
+                                                      selectedPatient = acc;
+                                                      break;
+                                                }
+                                          }
+                                    }
+                                    if (selectedPatient != null)
+                                    {
+                                          Console.Clear();
+                                          Console.WriteLine($"===== Patient {selectedPatient.Name} =====");
+                                          Console.ReadLine();
+                                    }
+                              }
                         }
                         else if (((Account)active_user).Status == AccountStatus.Patient)
                         {
                               Console.WriteLine($"===== {((Account)active_user).Name} =====");
-                              Console.WriteLine($"Browse");
+                              Console.WriteLine($"Browse On Going Cases");
                               Console.ReadLine();
                         }
                         else if (((Account)active_user).Status == AccountStatus.SuperAdmin)
                         {
                               Console.WriteLine($"===== {((Account)active_user).Name} =====");
-                              Console.WriteLine($"Browse");
+                              Console.WriteLine($"Browse EVERYTHING");
                               Console.ReadLine();
                         }
                               break;
-                        case ConsoleKey.D3:
+                  case ConsoleKey.D3:
                               Console.WriteLine($"Logging out...");
                               active_user = null;
                               Console.ReadLine();
@@ -109,3 +143,25 @@ while (running)
       }
       
 }
+
+
+                        // case ConsoleKey.D4:
+                        // if (((Account)active_user).Status == AccountStatus.Doctor)
+                        // {
+                        //       Console.WriteLine($"===== {((Account)active_user).Name} =====");
+                        //       Console.WriteLine($"Profile");
+                        //       Console.ReadLine();
+                        // }
+                        // else if (((Account)active_user).Status == AccountStatus.Patient)
+                        // {
+                        //       Console.WriteLine($"===== {((Account)active_user).Name} =====");
+                        //       Console.WriteLine($"Profile");
+                        //       Console.ReadLine();
+                        // }
+                        // else if (((Account)active_user).Status == AccountStatus.SuperAdmin)
+                        // {
+                        //       Console.WriteLine($"===== {((Account)active_user).Name} =====");
+                        //       Console.WriteLine($"Profile");
+                        //       Console.ReadLine();
+                        // }
+                        //       break;      
