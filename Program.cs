@@ -97,27 +97,39 @@ while (running)
                               }
                               var keyInfo = Console.ReadKey(intercept: true);
                               string input = keyInfo.KeyChar.ToString();
-                              if (int.TryParse(input, out int choice))
+                              if (!int.TryParse(input, out int choice))
                               {
-                                    int currentIndex = 1;
-                                    Account selectedPatient = null;
-                                    foreach (var acc in users)
+                                    Console.WriteLine("Invalid input...");
+                                    Console.ReadLine();
+                              }
+                              else
+                              {
+
+                              }
+                              int currentIndex = 1;
+                              Account selectedPatient = null;
+                              foreach (var acc in users)
+                              {
+                                    if (acc.Status == AccountStatus.Patient)
                                     {
-                                          if (acc.Status == AccountStatus.Patient)
+                                          if (currentIndex == choice)
                                           {
-                                                if (currentIndex == choice)
-                                                {
-                                                      selectedPatient = acc;
-                                                      break;
-                                                }
+                                                selectedPatient = acc;
+                                                break;
                                           }
+                                          currentIndex++;
                                     }
-                                    if (selectedPatient != null)
-                                    {
-                                          Console.Clear();
-                                          Console.WriteLine($"===== Patient {selectedPatient.Name} =====");
-                                          Console.ReadLine();
-                                    }
+                              }
+                              if (selectedPatient != null)
+                              {
+                                    Console.Clear();
+                                    Console.WriteLine($"===== Patient {selectedPatient.Name} =====");
+                                    Console.ReadLine();
+                              }
+                              else
+                              {
+                                    Console.WriteLine("Invalid index of patient....");
+                                    Console.ReadLine();
                               }
                         }
                         else if (((Account)active_user).Status == AccountStatus.Patient)
