@@ -174,12 +174,26 @@ while (running)
                                     {
                                           if (selectedPatient is Patient ChoosenPatient)
                                           {
-                                                Console.WriteLine($"===== {ChoosenPatient.Name} Medication =====");
+                                                Console.WriteLine($"===== {selectedPatient.Name} Medication =====");
+                                                
                                                 if (ChoosenPatient.Journals.Count == 0)
                                                 {
-                                                      Console.WriteLine("No Journals Yet.");
+                                                      Console.WriteLine("No Medication..");
                                                 }
-                                                
+                                                else
+                                                {
+                                                      foreach (var journal in ChoosenPatient.Journals)
+                                                      {
+                                                            if (journal.Meds.Count > 0)
+                                                            {
+                                                                  Console.WriteLine("Medications:");
+                                                                  foreach (var med in journal.Meds)
+                                                                  {
+                                                                        Console.WriteLine($" - {med}");
+                                                                  }
+                                                            }
+                                                      }
+                                                }
                                                 Console.ReadLine();
                                                 break;
                                           }
@@ -200,6 +214,7 @@ while (running)
                                                       foreach (var journal in ChoosenPatient.Journals)
                                                       {
                                                             Console.WriteLine($" [{journalIndex}] - {journal.Description}");
+                                                            journalIndex++;
                                                             if (journal.Meds.Count > 0)
                                                             {
                                                                   Console.WriteLine("Medications:");
