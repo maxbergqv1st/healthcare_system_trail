@@ -1,12 +1,12 @@
 namespace App;
 
-class SuperAdmin : IUser
+class Doctor : IUser
 {
       public string Name { get; set; }
       public string Username { get; set; }
       public string _password { get; set; }
       public AccountStatus Status { get; set; }
-      public SuperAdmin(string name, string username, string password , AccountStatus status)
+      public Doctor(string name, string username, string password , AccountStatus status)
       {
             Name = name;
             Username = username;
